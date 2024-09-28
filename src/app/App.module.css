@@ -1,0 +1,22 @@
+.wrapper {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    Segoe UI Symbol,
+    'Noto Color Emoji';
+  font-size: 24px;
+  display: flex;
+  align-items: stretch;
+
+  margin-top: 2px;
+  border: 1px solid red;
+  padding: 1rem;
+}
+
+.sep {
+  width: 0.125rem;
+  background-color: gray;
+}

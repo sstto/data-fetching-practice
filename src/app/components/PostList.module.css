@@ -1,0 +1,36 @@
+.wrapper {
+  flex: 1;
+  padding: 1rem;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem; /* 32px */
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.post {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+  align-items: center;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+}
+
+.post:hover {
+  opacity: 0.5;
+}
+
+.post:active {
+  background-color: black;
+}
