@@ -18,42 +18,24 @@ const Comment = ({ author, comment }: { author: string; comment: string }) => {
 };
 
 export const PostDetail = ({
-  selectedPostId,
+  selectedPost,
   repositories,
 }: {
-  selectedPostId: number;
+  selectedPost: Post | undefined;
   repositories: {
     postRepository: PostRepository;
     commentRepository: CommentRepository;
   };
 }) => {
-  const [post, setPost] = useState<Post>();
   const [comments, setComments] = useState<Comment[]>();
 
   useEffect(() => {
-    setPost(undefined);
     setComments(undefined);
-  }, [selectedPostId]);
-
-  useEffect(() => {
     let ignore = false;
     const fetchData = async () => {
-      const data = await repositories.postRepository.getPost(selectedPostId);
-      if (!ignore) {
-        setPost(data);
-      }
-    };
-    fetchData().catch(() => null);
-    return () => {
-      ignore = true;
-    };
-  }, [selectedPostId, repositories]);
-
-  useEffect(() => {
-    let ignore = false;
-    const fetchData = async () => {
-      const data =
-        await repositories.commentRepository.listComments(selectedPostId);
+      const data = await repositories.commentRepository.listComments(
+        selectedPost?.id ?? 1,
+      );
       if (!ignore) {
         setComments(data);
       }
@@ -62,7 +44,7 @@ export const PostDetail = ({
     return () => {
       ignore = true;
     };
-  }, [selectedPostId, repositories]);
+  }, [selectedPost, repositories]);
 
   return (
     <>
@@ -70,7 +52,7 @@ export const PostDetail = ({
         <div>
           <div className={styles.title}>내용</div>
           <div className={styles.content}>
-            {post === undefined ? 'Loading...' : post.body}
+            {selectedPost === undefined ? 'Loading...' : selectedPost.body}
           </div>
         </div>
         <div>

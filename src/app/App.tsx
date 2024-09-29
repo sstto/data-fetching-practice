@@ -11,8 +11,10 @@ import { PostList } from './components/PostList';
 const baseUrl: string = 'https://jsonplaceholder.typicode.com/';
 
 export const App = () => {
-  const [posts, setPosts] = useState<Post[]>();
-  const [selectedPostId, setSelectedPostId] = useState(1);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [selectedPostId, setSelectedPostId] = useState<number>();
+  const selectedPost =
+    posts.find((p) => p.id === selectedPostId) ?? posts.at(0);
 
   const repositories = useMemo(() => {
     const postRepository = createPostRepository(baseUrl);
@@ -43,13 +45,10 @@ export const App = () => {
         if (event.key !== key) return;
         event.preventDefault();
         setSelectedPostId((prev) => {
-          const maxId =
-            posts === undefined ? 1 : Math.max(...posts.map((post) => post.id));
-          return coerceIn(
-            prev + value,
-            1,
-            posts?.findLast === undefined ? 1 : maxId,
-          );
+          const minId = Math.min(...posts.map((post) => post.id));
+          const maxId = Math.max(...posts.map((post) => post.id));
+          const prevWithFallback = prev ?? posts.at(0)?.id ?? 1;
+          return coerceIn(prevWithFallback + value, minId, maxId);
         });
       });
     };
@@ -59,19 +58,20 @@ export const App = () => {
     };
   }, [posts]);
 
+  const onClickPost = (id: Post['id']) => {
+    setSelectedPostId(id);
+  };
+
   return (
     <>
       <div className={styles.wrapper}>
         <PostList
           posts={posts}
-          selectedPostId={selectedPostId}
-          setSelectedPostId={setSelectedPostId}
+          selectedPost={selectedPost}
+          onClickPost={onClickPost}
         />
         <div className={styles.sep}></div>
-        <PostDetail
-          selectedPostId={selectedPostId}
-          repositories={repositories}
-        />
+        <PostDetail selectedPost={selectedPost} repositories={repositories} />
       </div>
     </>
   );

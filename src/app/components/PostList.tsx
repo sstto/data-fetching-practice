@@ -27,29 +27,26 @@ const Post = ({
 
 export const PostList = ({
   posts,
-  selectedPostId,
-  setSelectedPostId,
+  selectedPost,
+  onClickPost,
 }: {
   posts: Post[] | undefined;
-  selectedPostId: number;
-  setSelectedPostId: React.Dispatch<React.SetStateAction<number>>;
+  selectedPost: Post | undefined;
+  onClickPost: (id: Post['id']) => void;
 }) => {
-  const onClick = (id: Post['id']) => {
-    setSelectedPostId(id);
-  };
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>포스트 목록</div>
       <div className={styles.list}>
         {posts === undefined
           ? 'Loading...'
-          : posts.map((post, index) => (
+          : posts.map((post) => (
               <Post
                 id={post.id}
                 title={post.title}
                 key={post.id}
-                selected={index + 1 === selectedPostId}
-                onClick={onClick}
+                selected={post.id === (selectedPost?.id ?? 1)}
+                onClick={onClickPost}
               />
             ))}
       </div>
