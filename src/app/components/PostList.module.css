@@ -1,6 +1,7 @@
 .wrapper {
   flex: 1;
   padding: 1rem;
+  overflow-y: scroll;
 }
 
 .title {
@@ -25,12 +26,22 @@
   align-items: center;
   font-size: 0.875rem; /* 14px */
   line-height: 1.25rem; /* 20px */
+  padding: 0.5rem;
+}
+
+.selectedPost {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+  align-items: center;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+  background-color: gainsboro;
+  border-radius: 5px;
+  padding: 0.5rem;
 }
 
 .post:hover {
   opacity: 0.5;
-}
-
-.post:active {
-  background-color: black;
 }
